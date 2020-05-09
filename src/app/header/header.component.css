@@ -1,0 +1,9 @@
+.header {
+    padding: 5px 20px;
+    background-color: darkorange;
+    color: white;
+}
+.header img {
+    width: 18px;
+    vertical-align: middle;
+}
