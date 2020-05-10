@@ -1,5 +1,76 @@
 # Angular Sample1
 
+## 参考
+
+- [Angular入門 - とほほのWWW入門](http://www.tohoho-web.com/ex/angular.html)
+- [Angular code coverage with Sonarqube](https://medium.com/@learning.bikash/angular-code-coverage-with-sonarqube-d2283442080b)
+
+## Angularのサンプルアプリを作る
+
+angular cliをインストール
+```
+$ npm install -g @angular/cli
+```
+
+アプリケーションを作成
+```
+$ ng new angular-sample1
+$ cd angular-sample1
+```
+
+実行してみる
+```
+$ ng serve
+```
+
+Webブラウザで http://localhost:4200 にアクセスすると画面が表示される
+
+SonarQubeで静的検証する  
+SonarScannerをインストールする  
+(--save-devをつけると、package.jsonにsonar-scannerが追加される)
+```
+$ npm install sonar-scanner --save-dev
+```
+
+sonar-project.propertiesファイルを以下の内容で作成する
+```
+sonar.host.url=http://localhost:9000
+sonar.login=admin
+sonar.password=admin
+sonar.projectKey=angular-sample1
+sonar.projectName=angular-sample1
+sonar.projectVersion=1.0
+sonar.sourceEncoding=UTF-8
+sonar.sources=src
+sonar.exclusions=**/node_modules/**
+sonar.tests=src
+sonar.test.inclusions=**/*.spec.ts
+sonar.typescript.lcov.reportPaths=coverage/angular-sample1/lcov.info
+```
+
+package.json の scripts に sonar-scanner を追加する
+```
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "sonar-scanner": "node_modules/sonar-scanner/bin/sonar-scanner"
+  },
+```
+
+SonarScannerを実行する  
+SonarQubeサーバにはSonarJSプラグイン、SonarTSプラグインが必要  
+SonarScannerにテスト結果を連携するために、先にテストを実行する
+```
+$ ng test --watch=false --code-coverage
+$ npm run sonar-scanner
+```
+
+# Angular Sample1
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.5.
 
 ## Development server
